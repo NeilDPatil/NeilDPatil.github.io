@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio — Alex Rivera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:         #FFFFFF;
+  --bg2:        #F7F7F7;
+  --bg3:        #EFEFEF;
+  --fg:         #0A0A0A;
+  --fg2:        #444444;
+  --fg3:        #888888;
+  --accent:     #2563EB;
+  --accent2:    #1D4ED8;
+  --accent-rgb: 37,99,235;
+  --border:     #E2E2E2;
+  --card:       #FFFFFF;
+  --shadow:     0 2px 16px rgba(0,0,0,0.07);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.12);
+  --radius:     12px;
+  --radius-sm:  8px;
+  --trans:      all 0.25s cubic-bezier(0.4,0,0.2,1);
+  --ff-head:    'Space Grotesk', sans-serif;
+  --ff-body:    'Inter', sans-serif;
+}
+[data-theme="dark"] {
+  --bg:         #0F0F0F;
+  --bg2:        #171717;
+  --bg3:        #222222;
+  --fg:         #F5F5F5;
+  --fg2:        #AAAAAA;
+  --fg3:        #666666;
+  --accent:     #F97316;
+  --accent2:    #EA6800;
+  --accent-rgb: 249,115,22;
+  --border:     #2A2A2A;
+  --card:       #1A1A1A;
+  --shadow:     0 2px 16px rgba(0,0,0,0.4);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.6);
+}
+
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--bg);color:var(--fg);font-family:var(--ff-body);line-height:1.6;transition:background 0.3s,color 0.3s;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
+
+/* ── PROGRESS BAR ── */
+#progress-bar{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:1000;transition:width 0.1s linear;}
+
+/* ── NAV ── */
+nav{position:fixed;top:3px;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem);height:60px;background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:var(--trans);}
+[data-theme="dark"] nav{background:rgba(15,15,15,0.85);}
+.nav-logo{font-family:var(--ff-head);font-weight:700;font-size:1.1rem;letter-spacing:-0.02em;}
+.nav-logo span{color:var(--accent);}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.nav-link{font-size:0.85rem;font-weight:500;color:var(--fg2);transition:var(--trans);padding:0.25rem 0.5rem;border-radius:6px;}
+.nav-link:hover{color:var(--fg);}
+.theme-toggle{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;background:var(--bg2);transition:var(--trans);font-size:1rem;}
+.theme-toggle:hover{background:var(--bg3);}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;padding:calc(60px + 4rem) clamp(1rem,6vw,5rem) 4rem;max-width:1100px;margin:0 auto;}
+.hero-inner{display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:center;width:100%;}
+.hero-img-placeholder{width:min(220px,100%);aspect-ratio:1;border-radius:var(--radius);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:4rem;border:3px solid var(--border);}
+.hero-img{width:min(220px,100%);aspect-ratio:1;border-radius:var(--radius);object-fit:cover;border:3px solid var(--border);box-shadow:var(--shadow-lg);}
+.status-badge{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.78rem;font-weight:500;padding:0.3rem 0.75rem;border-radius:20px;background:rgba(var(--accent-rgb),0.1);color:var(--accent);border:1px solid rgba(var(--accent-rgb),0.25);margin-bottom:0.75rem;}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.hero-name{font-family:var(--ff-head);font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;margin-bottom:0.35rem;}
+.hero-title{font-size:1rem;color:var(--fg2);font-weight:500;margin-bottom:1rem;}
+.hero-bio{font-size:0.95rem;color:var(--fg2);line-height:1.75;margin-bottom:1.5rem;max-width:480px;}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.75rem;}
+.skill-chip{font-size:0.75rem;font-weight:500;padding:0.3rem 0.75rem;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--fg2);transition:var(--trans);}
+.skill-chip:hover{border-color:var(--accent);color:var(--accent);}
+.hero-actions{display:flex;gap:0.75rem;flex-wrap:wrap;}
+.btn-primary{display:inline-flex;align-items:center;gap:0.5rem;background:var(--accent);color:#fff;font-weight:600;font-size:0.9rem;padding:0.65rem 1.4rem;border-radius:8px;transition:var(--trans);border:2px solid var(--accent);}
+.btn-primary:hover{background:var(--accent2);border-color:var(--accent2);transform:translateY(-1px);}
+.btn-outline{display:inline-flex;align-items:center;gap:0.5rem;background:transparent;color:var(--fg);font-weight:600;font-size:0.9rem;padding:0.65rem 1.4rem;border-radius:8px;transition:var(--trans);border:2px solid var(--border);}
+.btn-outline:hover{border-color:var(--fg);transform:translateY(-1px);}
+
+/* ── ACCORDION ── */
+.sections-wrapper{max-width:1100px;margin:0 auto 6rem;padding:0 clamp(1rem,6vw,5rem);}
+.section-block{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem;transition:var(--trans);}
+.section-block.open{box-shadow:var(--shadow-lg);}
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;cursor:pointer;background:var(--card);transition:var(--trans);user-select:none;}
+.section-header:hover{background:var(--bg2);}
+.section-block.open .section-header{border-bottom:1px solid var(--border);}
+.section-title-row{display:flex;align-items:center;gap:0.85rem;}
+.section-number{font-family:var(--ff-head);font-size:0.75rem;font-weight:700;color:var(--accent);width:24px;}
+.section-label{font-family:var(--ff-head);font-size:1.05rem;font-weight:600;letter-spacing:-0.01em;}
+.section-count{font-size:0.78rem;color:var(--fg3);background:var(--bg2);border:1px solid var(--border);padding:0.15rem 0.55rem;border-radius:20px;}
+.chevron{width:20px;height:20px;transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);color:var(--fg3);flex-shrink:0;}
+.section-block.open .chevron{transform:rotate(180deg);}
+.section-body{max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1);}
+.section-body.open{max-height:9000px;}
+.section-content{padding:1.75rem 1.5rem;background:var(--card);}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;}
+.project-card{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;transition:var(--trans);background:var(--bg2);}
+.project-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--accent);}
+.project-card.expanded{grid-column:1/-1;}
+.project-thumb{width:100%;height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:2.5rem;}
+.project-thumb img{width:100%;height:100%;object-fit:cover;}
+.project-body{padding:1rem 1.1rem 1.1rem;}
+.project-date{font-size:0.72rem;color:var(--fg3);font-weight:500;margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.05em;}
+.project-title{font-family:var(--ff-head);font-weight:600;font-size:1rem;margin-bottom:0.4rem;}
+.project-desc{font-size:0.84rem;color:var(--fg2);line-height:1.65;}
+.project-footer{padding:0.75rem 1.1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--card);}
+.github-link{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.8rem;font-weight:600;color:var(--fg2);transition:var(--trans);}
+.github-link:hover{color:var(--accent);}
+.expand-btn{font-size:0.75rem;color:var(--fg3);background:none;border:none;cursor:pointer;font-family:var(--ff-body);}
+.project-expanded{display:none;padding:1.1rem;border-top:1px solid var(--border);background:var(--bg);}
+.project-card.expanded .project-expanded{display:block;}
+.project-expanded-inner{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start;}
+.project-expanded h4{font-family:var(--ff-head);font-size:0.85rem;font-weight:600;margin-bottom:0.5rem;color:var(--fg3);text-transform:uppercase;letter-spacing:0.05em;}
+.project-expanded p{font-size:0.9rem;color:var(--fg2);line-height:1.7;}
+.tags{margin-top:0.25rem;}
+.tag{display:inline-block;font-size:0.72rem;font-weight:500;padding:0.2rem 0.6rem;border-radius:5px;background:rgba(var(--accent-rgb),0.1);color:var(--accent);border:1px solid rgba(var(--accent-rgb),0.2);margin:0.2rem 0.2rem 0 0;}
+.repo-btn{display:inline-flex;align-items:center;gap:0.4rem;margin-top:1.25rem;background:var(--accent);color:#fff;font-weight:600;font-size:0.85rem;padding:0.5rem 1rem;border-radius:8px;transition:var(--trans);border:2px solid var(--accent);}
+.repo-btn:hover{background:var(--accent2);border-color:var(--accent2);}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:2rem;}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),var(--border));}
+.timeline-item{position:relative;padding-bottom:2rem;opacity:0;transform:translateY(16px);transition:opacity 0.5s,transform 0.5s;}
+.timeline-item.visible{opacity:1;transform:none;}
+.timeline-dot{position:absolute;left:-2.5rem;top:0.25rem;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 0 3px rgba(var(--accent-rgb),0.2);}
+.cert-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.1rem 1.25rem;transition:var(--trans);}
+.cert-card:hover{border-color:var(--accent);box-shadow:var(--shadow);}
+.cert-org{font-size:0.75rem;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem;}
+.cert-title{font-family:var(--ff-head);font-size:1rem;font-weight:600;margin-bottom:0.2rem;}
+.cert-date{font-size:0.78rem;color:var(--fg3);}
+
+/* ── SOCIALS ── */
+.socials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;}
+.social-card{display:flex;align-items:center;gap:0.85rem;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);transition:var(--trans);}
+.social-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow);}
+.social-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
+.social-name{font-weight:600;font-size:0.9rem;font-family:var(--ff-head);display:block;}
+.social-handle{font-size:0.75rem;color:var(--fg3);display:block;}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:2.5rem;border-top:1px solid var(--border);font-size:0.82rem;color:var(--fg3);}
+footer span{color:var(--accent);}
+
+/* ── FADE IN ── */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.fade-in.visible{opacity:1;transform:none;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .hero-inner{grid-template-columns:1fr;gap:2rem;text-align:center;}
+  .hero-img-placeholder,.hero-img{margin:0 auto;}
+  .skills-wrap,.hero-actions{justify-content:center;}
+  .nav-link{display:none;}
+  .project-expanded-inner{grid-template-columns:1fr;}
+}
+@media(max-width:480px){
+  .socials-grid{grid-template-columns:1fr 1fr;}
+  .projects-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>//</span> Alex Rivera</a>
+  <div class="nav-right">
+    <a class="nav-link" href="#projects">Projects</a>
+    <a class="nav-link" href="#certs">Certs</a>
+    <a class="nav-link" href="#socials">Socials</a>
+    <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="fade-in">
+      <div class="hero-img-placeholder">🧑‍💻</div>
+    </div>
+
+    <div class="fade-in" style="transition-delay:0.1s">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Open to opportunities
+      </div>
+      <h1 class="hero-name">Alex Rivera</h1>
+      <p class="hero-title">Software Engineer · Full-Stack Developer</p>
+      <p class="hero-bio">I build scalable, thoughtful software — from backend systems to polished product interfaces. I care about clean architecture, developer experience, and shipping things that actually work.</p>
+
+      <div class="skills-wrap">
+        <span class="skill-chip">React</span>
+        <span class="skill-chip">Next.js</span>
+        <span class="skill-chip">TypeScript</span>
+        <span class="skill-chip">Node.js</span>
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">PostgreSQL</span>
+        <span class="skill-chip">Docker</span>
+        <span class="skill-chip">AWS</span>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn-primary" href="#">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+          Download Resume
+        </a>
+        <a class="btn-outline" href="#projects">View Projects</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MAIN SECTIONS -->
+<div class="sections-wrapper">
+
+  <!-- 01 PROJECTS -->
+  <div class="section-block fade-in" id="projects">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-row">
+        <span class="section-number">01</span>
+        <span class="section-label">My Projects</span>
+        <span class="section-count">3</span>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="section-body">
+      <div class="section-content">
+        <div class="projects-grid">
+
+          <!-- Project 1 -->
+          <div class="project-card" onclick="toggleProject(this)">
+            <div class="project-thumb">🚀</div>
+            <div class="project-body">
+              <div class="project-date">Apr 2025</div>
+              <div class="project-title">DataFlow CLI</div>
+              <div class="project-desc">A terminal-based tool for real-time data pipeline inspection and debugging.</div>
+            </div>
+            <div class="project-footer">
+              <a class="github-link" href="https://github.com" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                View on GitHub
+              </a>
+              <button class="expand-btn" onclick="event.stopPropagation();toggleProject(this.closest('.project-card'))">▼ More</button>
+            </div>
+            <div class="project-expanded">
+              <div class="project-expanded-inner">
+                <div>
+                  <h4>About</h4>
+                  <p>Built for engineers who want visibility into message queues without leaving the terminal. Supports Kafka, RabbitMQ, and SQS with a plugin architecture for extensibility.</p>
+                </div>
+                <div>
+                  <h4>Stack</h4>
+                  <div class="tags">
+                    <span class="tag">Go</span>
+                    <span class="tag">Kafka</span>
+                    <span class="tag">CLI</span>
+                    <span class="tag">Docker</span>
+                  </div>
+                  <a class="repo-btn" href="https://github.com" target="_blank" rel="noopener">Open Repository →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+
+          <!-- Project 2 -->
+          <div class="project-card" onclick="toggleProject(this)">
+            <div class="project-thumb">🌐</div>
+            <div class="project-body">
+              <div class="project-date">Oct 2024</div>
+              <div class="project-title">ShelfSync</div>
+              <div class="project-desc">Smart home inventory tracker with barcode scanning and expiry alerts.</div>
+            </div>
+            <div class="project-footer">
+              <a class="github-link" href="https://github.com" target="_blank" rel="noopener"onclick="event.stopPropagation()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                View on GitHub
+              </a>
+              <button class="expand-btn" onclick="event.stopPropagation();toggleProject(this.closest('.project-card'))">▼ More</button>
+            </div>
+            <div class="project-expanded">
+              <div class="project-expanded-inner">
+                <div>
+                  <h4>About</h4>
+                  <p>Mobile-first PWA that uses the device camera to scan barcodes and auto-populate item details from open food databases. Pushes notifications for expiring items.</p>
+                </div>
+                <div>
+                  <h4>Stack</h4>
+                  <div class="tags">
+                    <span class="tag">React Native</span>
+                    <span class="tag">Firebase</span>
+                    <span class="tag">ML Kit</span>
+                    <span class="tag">PWA</span>
+                  </div>
+                  <a class="repo-btn" href="https://github.com" target="_blank" rel="noopener">Open Repository →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /projects-grid -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 CERTIFICATES -->
+  <div class="section-block fade-in" id="certs" style="transition-delay:0.05s">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-row">
+        <span class="section-number">02</span>
+        <span class="section-label">Certificates</span>
+        <span class="section-count">3</span>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="section-body">
+      <div class="section-content">
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="cert-card">
+              <div class="cert-org">Amazon Web Services</div>
+              <div class="cert-title">AWS Solutions Architect – Associate</div>
+              <div class="cert-date">Feb 2025</div>
+            </div>
+          </div>
+
+          <div class="timeline-item" style="transition-delay:0.1s">
+            <div class="timeline-dot"></div>
+            <div class="cert-card">
+              <div class="cert-org">Google Cloud</div>
+              <div class="cert-title">Professional Cloud Developer</div>
+              <div class="cert-date">Sep 2024</div>
+            </div>
+          </div>
+
+          <div class="timeline-item" style="transition-delay:0.2s">
+            <div class="timeline-dot"></div>
+            <div class="cert-card">
+              <div class="cert-org">CNCF</div>
+              <div class="cert-title">Certified Kubernetes Administrator</div>
+              <div class="cert-date">May 2024</div>
+            </div>
+          </div>
+
+        </div><!-- /timeline -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 SOCIALS -->
+  <div class="section-block fade-in" id="socials" style="transition-delay:0.1s">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-title-row">
+        <span class="section-number">03</span>
+        <span class="section-label">Socials</span>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="section-body">
+      <div class="section-content">
+        <div class="socials-grid">
+
+          <a class="social-card" href="https://github.com" target="_blank" rel="noopener">
+            <div class="social-icon" style="background:#24292e22;color:#24292e">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </div>
+            <div>
+              <span class="social-name">GitHub</span>
+              <span class="social-handle">@alexrivera</span>
+            </div>
+          </a>
+
+          <a class="social-card" href="https://linkedin.com" target="_blank" rel="noopener">
+            <div class="social-icon" style="background:#0077b522;color:#0077b5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </div>
+            <div>
+              <span class="social-name">LinkedIn</span>
+              <span class="social-handle">in/alexrivera</span>
+            </div>
+          </a>
+
+          <a class="social-card" href="https://instagram.com" target="_blank" rel="noopener">
+            <div class="social-icon" style="background:#e1306c22;color:#e1306c">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </div>
+            <div>
+              <span class="social-name">Instagram</span>
+              <span class="social-handle">@alexrivera</span>
+            </div>
+          </a>
+
+          <a class="social-card" href="mailto:alex@example.com">
+            <div class="social-icon" style="background:#2563eb22;color:#2563eb">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <span class="social-name">Email</span>
+              <span class="social-handle">alex@example.com</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sections-wrapper -->
+
+<footer>&copy; 2025 <span>Alex Rivera</span> · Built with care</footer>
+
+<script>
+/* ACCORDION */
+function toggleSection(header) {
+  const block = header.closest('.section-block');
+  const isOpen = block.classList.contains('open');
+  block.classList.toggle('open', !isOpen);
+  block.querySelector('.section-body').classList.toggle('open', !isOpen);
+}
+
+/* PROJECT EXPAND */
+function toggleProject(card) {
+  const isExp = card.classList.contains('expanded');
+  // Collapse all first
+  document.querySelectorAll('.project-card.expanded').forEach(c => {
+    c.classList.remove('expanded');
+    c.querySelector('.expand-btn').textContent = '▼ More';
+  });
+  if (!isExp) {
+    card.classList.add('expanded');
+    card.querySelector('.expand-btn').textContent = '▲ Less';
+  }
+}
+
+/* THEME */
+const themeBtn = document.getElementById('theme-toggle');
+let theme = localStorage.getItem('portfolio_theme') || 'light';
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('portfolio_theme', t);
+  theme = t;
+}
+applyTheme(theme);
+themeBtn.addEventListener('click', () => applyTheme(theme === 'light' ? 'dark' : 'light'));
+
+/* SCROLL PROGRESS */
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+});
+
+/* FADE IN ON SCROLL */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in, .timeline-item').forEach(el => io.observe(el));
+
+/* SMOOTH NAV */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) {
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (el.classList.contains('section-block') && !el.classList.contains('open')) {
+        el.classList.add('open');
+        el.querySelector('.section-body').classList.add('open');
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>
